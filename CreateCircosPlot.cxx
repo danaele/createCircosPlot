@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
-
+#include <vector>
 
 int main ( int argc, char *argv[] )
 {
@@ -32,7 +32,7 @@ int main ( int argc, char *argv[] )
     nb_lines=nb_lines-1;
 
     inputFile.open( fileName.c_str() , std::ios::in ) ;
-    double mat[nb_lines][nb_lines];
+    std::vector< std::vector<float> > mat;
     std::string::iterator str_it, str_end;
     std::string number="";
     int k = 0;
@@ -41,7 +41,7 @@ int main ( int argc, char *argv[] )
         for(int i=0 ; i < nb_lines ; i++)
         {
             getline(inputFile,labelLine);
-
+            std::vector<float> vec ;
             for(str_it=labelLine.begin() , str_end=labelLine.end() ; str_it!=str_end ; ++str_it )
             {
 
@@ -53,15 +53,14 @@ int main ( int argc, char *argv[] )
                 else if( *str_it ==' ' || *str_it =='\n' )
                 {
                     double val = atof(number.c_str());
-                    mat[i][k]=val ;
-                    std::cout<<"Coord"<<i<<","<<k<<" Mat value "<<mat[i][k]<<std::endl;
+                    vec.push_back(val);
+                    //std::cout<<"Coord"<<i<<","<<k<<" Mat value "<<val<<std::endl;
                     k++;
                     number="";
                 }
             }
             double val = atof(number.c_str());
-            mat[i][k]=val ;
-            std::cout<<"Coord "<<i<<","<<k<<" Mat value "<<mat[i][k]<<std::endl;
+           mat.push_back(vec);
             k=0;
         }
     }
@@ -72,7 +71,7 @@ int main ( int argc, char *argv[] )
     {
         for(int j=0 ; j < nb_lines ; j++)
         {
-            std::cout<<"Coord "<<i<<","<<k<<" Mat val "<<mat[i][j]<<std::endl; ;
+            std::cout<<"Coord "<<i<<","<<j<<" Mat val "<<mat[i][j]<<std::endl; ;
         }
     }
 
